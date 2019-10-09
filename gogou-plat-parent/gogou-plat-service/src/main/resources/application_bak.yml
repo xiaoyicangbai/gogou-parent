@@ -1,0 +1,11 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: GOGOU-PLAT
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    serviceUrl:
+      defaultZone: http://root:root@localhost:8761/eureka/
