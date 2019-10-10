@@ -8,9 +8,11 @@ spring:
           uri: https://github.com/fengye0911/gogou-config.git
   application:
     name: GOGOU-CONFIG
+
 eureka:
   instance:
     prefer-ip-address: true
   client:
     serviceUrl:
       defaultZone: http://root:root@localhost:8761/eureka/
+
