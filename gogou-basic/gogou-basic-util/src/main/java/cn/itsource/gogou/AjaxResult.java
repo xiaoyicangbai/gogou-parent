@@ -30,7 +30,8 @@ public class AjaxResult {
         return resultObject;
     }
 
-    public void setResultObject(Object resultObject) {
+    public AjaxResult setResultObject(Object resultObject) {
         this.resultObject = resultObject;
+        return this;
     }
 }
