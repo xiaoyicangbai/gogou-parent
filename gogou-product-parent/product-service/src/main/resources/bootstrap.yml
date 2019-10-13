@@ -1,0 +1,14 @@
+spring:
+  cloud:
+    config:
+      profile: dev
+      name: application-product
+      discovery:
+        enabled: true
+        service-id: GOGOU-CONFIG
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    serviceUrl:
+      defaultZone: http://root:root@localhost:8761/eureka/

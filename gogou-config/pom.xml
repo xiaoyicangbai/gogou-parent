@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>gogou-config</artifactId>
+    <artifactId>gogou-cn.itsource.gogou.config</artifactId>
     <dependencies>
         <!--web的启动器-->
         <dependency>
