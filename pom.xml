@@ -15,6 +15,7 @@
         <module>gogou-zuul</module>
         <module>gogou-config</module>
         <module>gogou-product-parent</module>
+        <module>gogou-common-parent</module>
     </modules>
     <dependencyManagement>
         <dependencies>

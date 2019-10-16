@@ -31,14 +31,10 @@ public class BrandController {
     */
     @RequestMapping(value="/add",method= RequestMethod.POST)
     public AjaxResult save(@RequestBody Brand brand){
-                brand.setProductTypeId(brand.getProductType().getId());
-                brand.setFirstLetter(LetterUtil.getFirstLetter(brand.getName()));
         try {
             if(brand.getId()!=null){
-                brand.setUpdateTime(new Date());
                 brandService.updateById(brand);
             }else{
-                brand.setCreateTime(new Date());
                 brandService.save(brand);
             }
             return AjaxResult.getAjaxResult();
@@ -79,7 +75,9 @@ public class BrandController {
         }
     }
 
-    //获取
+    /**
+     * 获取
+     */
     @RequestMapping(value = "/{id}",method = RequestMethod.GET)
     public Brand get(@PathVariable("id") Long id)
     {
@@ -100,7 +98,6 @@ public class BrandController {
 
     /**
     * 分页查询数据
-    *
     * @param query 查询对象
     * @return PageList 分页对象
     */

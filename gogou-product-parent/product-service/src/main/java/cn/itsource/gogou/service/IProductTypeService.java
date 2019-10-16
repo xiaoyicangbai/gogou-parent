@@ -15,5 +15,11 @@ import java.util.List;
  * @since 2019-10-12
  */
 public interface IProductTypeService extends IService<ProductType> {
+
     List<ProductType> loadTypeTree();
+    /**
+     * 生成静态home页面
+     * @return
+     */
+    void genHomePage();
 }

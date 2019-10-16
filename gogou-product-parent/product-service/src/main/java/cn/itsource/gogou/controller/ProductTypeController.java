@@ -1,5 +1,6 @@
 package cn.itsource.gogou.controller;
 
+import cn.itsource.gogou.client.RedisClient;
 import cn.itsource.gogou.query.ProductTypeQuery;
 import cn.itsource.gogou.service.IProductTypeService;
 import cn.itsource.gogou.domain.ProductType;
@@ -15,8 +16,24 @@ import java.util.List;
 @RestController
 @RequestMapping("/productType")
 public class ProductTypeController {
+
     @Autowired
     public IProductTypeService productTypeService;
+
+    /**
+     * 生成静态home页面
+     * @return
+     */
+    @PostMapping("/genHomePage")
+    public AjaxResult genHomePage(){
+        try {
+            productTypeService.genHomePage();
+            return AjaxResult.getAjaxResult().setSuccess(true).setMessage("成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return AjaxResult.getAjaxResult().setSuccess(false).setMessage("失败");
+        }
+    }
 
     /**
     * 保存和修改公用的
@@ -91,4 +108,5 @@ public class ProductTypeController {
     public List<ProductType> loadTypeTree(){
         return productTypeService.loadTypeTree();
     }
+
 }

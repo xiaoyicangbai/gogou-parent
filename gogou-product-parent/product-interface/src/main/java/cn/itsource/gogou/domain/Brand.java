@@ -33,10 +33,10 @@ public class Brand implements Serializable {
     private Long id;
 
     @TableField("createTime")
-    private Date createTime;
+    private Long createTime;
 
     @TableField("updateTime")
-    private Date updateTime;
+    private Long updateTime;
 
     /**
      * 用户姓名
