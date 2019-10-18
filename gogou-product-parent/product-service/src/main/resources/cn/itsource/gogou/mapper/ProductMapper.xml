@@ -10,10 +10,10 @@
         <result column="name" property="name" />
         <result column="subName" property="subName" />
         <result column="code" property="code" />
-        <result column="productType" property="productType" />
+        <result column="product_type_id" property="productTypeId" />
         <result column="onSaleTime" property="onSaleTime" />
         <result column="offSaleTime" property="offSaleTime" />
-        <result column="brandId" property="brandId" />
+        <result column="brand_id" property="brandId" />
         <result column="state" property="state" />
         <result column="maxPrice" property="maxPrice" />
         <result column="minPrice" property="minPrice" />
@@ -25,6 +25,32 @@
         <result column="goodCommentCount" property="goodCommentCount" />
         <result column="commonCommentCount" property="commonCommentCount" />
         <result column="badCommentCount" property="badCommentCount" />
+        <result column="skuProperties" property="skuProperties" />
+        <result column="medias" property="medias" />
+        <association property="productType" javaType="cn.itsource.gogou.domain.ProductType">
+            <id column="product_type_id" property="id"/>
+            <result column="typeName" property="name"/>
+        </association>
+        <association property="brand" javaType="cn.itsource.gogou.domain.Brand">
+            <id column="brand_id" property="id"/>
+            <result column="brandName" property="name"/>
+        </association>
     </resultMap>
+    <select id="queryPage" resultMap="BaseResultMap">
+        SELECT p.*,pt.`name` typeName,b.`name` brandName
+        FROM t_product p
+        LEFT JOIN t_product_type pt ON p.product_type_id=pt.id
+        LEFT JOIN t_brand b ON p.brand_id=b.id
+        <include refid="whereSql"></include>
+    </select>
+    <sql id="whereSql">
+        <where>
+            <if test="#{query.keyword} !=null">
+                p.name like concat('%',#{query.keyword},'%')
+                or
+                p.subName like concat('%',#{query.keyword},'%')
+            </if>
+        </where>
+    </sql>
 
 </mapper>

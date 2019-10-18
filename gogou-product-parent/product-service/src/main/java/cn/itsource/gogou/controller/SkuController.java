@@ -1,41 +1,35 @@
 package cn.itsource.gogou.controller;
 
-
-import cn.itsource.gogou.domain.Brand;
-import cn.itsource.gogou.domain.ProductType;
-import cn.itsource.gogou.query.BrandQuery;
-import cn.itsource.gogou.service.IBrandService;
+import cn.itsource.gogou.query.SkuQuery;
+import cn.itsource.gogou.service.ISkuService;
+import cn.itsource.gogou.domain.Sku;
 import cn.itsource.gogou.util.AjaxResult;
-import cn.itsource.gogou.util.LetterUtil;
 import cn.itsource.gogou.util.PageList;
-import cn.itsource.gogou.util.StrUtils;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping("/brand")
-public class BrandController {
+@RequestMapping("/sku")
+public class SkuController {
     @Autowired
-    public IBrandService brandService;
+    public ISkuService skuService;
 
     /**
     * 保存和修改公用的
-    * @param brand  传递的实体
+    * @param sku  传递的实体
     * @return Ajaxresult转换结果
     */
     @RequestMapping(value="/add",method= RequestMethod.POST)
-    public AjaxResult save(@RequestBody Brand brand){
+    public AjaxResult save(@RequestBody Sku sku){
         try {
-            if(brand.getId()!=null){
-                brandService.updateById(brand);
+            if(sku.getId()!=null){
+                skuService.updateById(sku);
             }else{
-                brandService.save(brand);
+                skuService.save(sku);
             }
             return AjaxResult.getAjaxResult();
         } catch (Exception e) {
@@ -52,22 +46,7 @@ public class BrandController {
     @RequestMapping(value="/delete/{id}",method=RequestMethod.DELETE)
     public AjaxResult delete(@PathVariable("id") Integer id){
         try {
-            brandService.removeById(id);
-            return AjaxResult.getAjaxResult();
-        } catch (Exception e) {
-        e.printStackTrace();
-            return AjaxResult.getAjaxResult().setMessage("删除对象失败！"+e.getMessage());
-        }
-    }
-    /**
-    * 批量删除对象信息
-    * @param ids
-    * @return
-    */
-    @RequestMapping(value="/deleteBatch",method=RequestMethod.DELETE)
-    public AjaxResult deleteBatch(@RequestParam("ids") String ids){
-        try {
-            brandService.removeByIds(StrUtils.splitStr2LongArr(ids));
+            skuService.removeById(id);
             return AjaxResult.getAjaxResult();
         } catch (Exception e) {
         e.printStackTrace();
@@ -75,13 +54,11 @@ public class BrandController {
         }
     }
 
-    /**
-     * 获取
-     */
+    //获取
     @RequestMapping(value = "/{id}",method = RequestMethod.GET)
-    public Brand get(@PathVariable("id") Long id)
+    public Sku get(@PathVariable("id") Long id)
     {
-        return brandService.getById(id);
+        return skuService.getById(id);
     }
 
 
@@ -90,21 +67,23 @@ public class BrandController {
     * @return
     */
     @RequestMapping(value = "/list",method = RequestMethod.GET)
-    public List<Brand> list(){
-        return brandService.list(null);
+    public List<Sku> list(){
+
+        return skuService.list(null);
     }
 
 
     /**
     * 分页查询数据
+    *
     * @param query 查询对象
     * @return PageList 分页对象
     */
     @RequestMapping(value = "/json",method = RequestMethod.POST)
-    public PageList<Brand> json(@RequestBody BrandQuery query){
-        return brandService.queryPage(query);
+    public PageList<Sku> json(@RequestBody SkuQuery query)
+    {
+        Page<Sku> page = new Page<Sku>(query.getPageNum(),query.getPageSize());
+        IPage<Sku> ipage = skuService.page(page);
+        return new PageList<Sku>(ipage.getTotal(),ipage.getRecords());
     }
-
-
-
 }

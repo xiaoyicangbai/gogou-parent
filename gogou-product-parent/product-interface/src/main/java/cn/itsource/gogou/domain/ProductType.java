@@ -86,6 +86,7 @@ public class ProductType implements Serializable {
     private String seoKeywords;
 
     private Long typeTemplateId;
+
     @TableField(exist = false)
     private List<ProductType> children = new ArrayList<>();
 

@@ -72,7 +72,6 @@ public class ProductController {
         return productService.list(null);
     }
 
-
     /**
     * 分页查询数据
     *
@@ -80,10 +79,7 @@ public class ProductController {
     * @return PageList 分页对象
     */
     @RequestMapping(value = "/json",method = RequestMethod.POST)
-    public PageList<Product> json(@RequestBody ProductQuery query)
-    {
-        Page<Product> page = new Page<Product>(query.getPageNum(),query.getPageSize());
-        IPage<Product> ipage = productService.page(page);
-        return new PageList<Product>(ipage.getTotal(),ipage.getRecords());
+    public PageList<Product> json(@RequestBody ProductQuery query){
+        return productService.queryPage(query);
     }
 }

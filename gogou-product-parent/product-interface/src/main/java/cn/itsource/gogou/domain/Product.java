@@ -1,17 +1,13 @@
 package cn.itsource.gogou.domain;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableField;
+import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.ToString;
 import lombok.experimental.Accessors;
-
-import java.io.Serializable;
-
-;
 
 /**
  * <p>
@@ -19,13 +15,12 @@ import java.io.Serializable;
  * </p>
  *
  * @author yun
- * @since 2019-10-12
+ * @since 2019-10-17
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("t_product")
-@ToString
 public class Product implements Serializable {
 
     private static final long serialVersionUID=1L;
@@ -58,8 +53,7 @@ public class Product implements Serializable {
     /**
      * 商品类型ID
      */
-    @TableField("productType")
-    private Long productType;
+    private Long productTypeId;
 
     /**
      * 上架时间
@@ -73,7 +67,6 @@ public class Product implements Serializable {
     @TableField("offSaleTime")
     private Long offSaleTime;
 
-    @TableField("brandId")
     private Long brandId;
 
     /**
@@ -131,6 +124,23 @@ public class Product implements Serializable {
 
     @TableField("badCommentCount")
     private Integer badCommentCount;
+
+    /**
+     * sku属性
+     */
+    @TableField("skuProperties")
+    private String skuProperties;
+
+    @TableField(exist = false)
+    private ProductType productType;
+
+    @TableField(exist = false)
+    private Brand brand;
+
+    private String medias;
+
+    @TableField(exist = false)
+    private ProductExt ext;
 
 
 }
