@@ -22,6 +22,9 @@ public enum JedisUtils {
         //获取连接时测试连接是否畅通
         config.setTestOnBorrow(true);
 
+        //对象空闲多久后逐出, 当空闲时间>该值 且 空闲连接>最大空闲数 时直接逐出,不再根据MinEvictableIdleTimeMillis判断  (默认逐出策略)
+        config.setSoftMinEvictableIdleTimeMillis(800000);
+
         //创建连接池对象
         pool = new JedisPool(config,"127.0.0.1",6379, 6000, "itsource");
     }

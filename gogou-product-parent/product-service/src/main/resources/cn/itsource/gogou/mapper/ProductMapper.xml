@@ -52,5 +52,9 @@
             </if>
         </where>
     </sql>
+    <update id="updateViewsProperties">
+        update t_product set t_product.viewProperties=#{viewsPropertyJson}
+        where t_product.id=#{productId}
+    </update>
 
 </mapper>

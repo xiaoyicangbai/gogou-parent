@@ -1,6 +1,7 @@
 package cn.itsource.gogou.mapper;
 
 import cn.itsource.gogou.domain.Product;
+import cn.itsource.gogou.domain.Specification;
 import cn.itsource.gogou.query.ProductQuery;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -18,4 +19,18 @@ import org.apache.ibatis.annotations.Param;
 public interface ProductMapper extends BaseMapper<Product> {
 
     IPage queryPage(Page page, @Param("query")ProductQuery query);
+
+    /**
+     * 查询显示属性
+     * @param productId
+     * @return
+     */
+    Product getViewsProperties(Long productId);
+    /**
+     * 更新显示属性
+     * @param productId
+     * @param viewsPropertyJson
+     * @return
+     */
+    void updateViewsProperties(@Param("productId") String productId, @Param("viewsPropertyJson") String viewsPropertyJson);
 }

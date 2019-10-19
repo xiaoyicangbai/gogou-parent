@@ -5,8 +5,12 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 
 /**
@@ -20,6 +24,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
+@ToString
 @TableName("t_specification")
 public class Specification implements Serializable {
 
@@ -34,8 +39,17 @@ public class Specification implements Serializable {
     @TableField("specName")
     private String specName;
 
+    @TableField("product_type_id")
+    private ProductType productTypeId;
+
     @TableField("isSku")
     private Integer isSku;
+
+    @TableField(exist = false)
+    private String value;
+
+    @TableField(exist = false)
+    private List<Specification> options =new ArrayList<>();
 
 
 }
