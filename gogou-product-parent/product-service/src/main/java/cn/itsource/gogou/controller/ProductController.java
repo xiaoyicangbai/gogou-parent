@@ -1,5 +1,6 @@
 package cn.itsource.gogou.controller;
 
+import cn.itsource.gogou.domain.SkuVo;
 import cn.itsource.gogou.domain.Specification;
 import cn.itsource.gogou.query.ProductQuery;
 import cn.itsource.gogou.service.IProductService;
@@ -101,7 +102,7 @@ public class ProductController {
      */
     @PostMapping("/updateViewsProperties")
     public AjaxResult updateViewsProperties(
-            @RequestParam("productId")String productId,
+            @RequestParam("productId")Long productId,
             @RequestBody List<Specification> viewProperty){
         try {
             productService.updateViewsProperties(productId,viewProperty);
@@ -119,5 +120,27 @@ public class ProductController {
     @GetMapping("/getSkuProperties/{productId}")
     public List<Specification> getSkuProperties(@PathVariable("productId") Long productId){
         return productService.getSkuProperties(productId);
+    }
+
+    /**
+     * 更新SKU属性
+     * @param productId
+     * @param
+     * @return
+     */
+    @PostMapping("/saveSkuProperties")
+    public AjaxResult updateSkuProperties(
+            @RequestParam("productId")Long productId,
+            @RequestBody SkuVo skuVo){
+        System.out.println(productId);
+        System.out.println(skuVo.getSkus());
+        System.out.println(skuVo.getSkuProperties());
+        try {
+            productService.updateSkuProperties(productId,skuVo.getSkuProperties(),skuVo.getSkus());
+            return AjaxResult.getAjaxResult().setMessage("操作成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return AjaxResult.getAjaxResult().setSuccess(false).setMessage("操作失败:"+e.getMessage());
+        }
     }
 }

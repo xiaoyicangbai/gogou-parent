@@ -32,5 +32,12 @@ public interface ProductMapper extends BaseMapper<Product> {
      * @param viewsPropertyJson
      * @return
      */
-    void updateViewsProperties(@Param("productId") String productId, @Param("viewsPropertyJson") String viewsPropertyJson);
+    void updateViewsProperties(@Param("productId") Long productId, @Param("viewsPropertyJson") String viewsPropertyJson);
+    /**
+     * 更新SKU属性
+     * @param productId
+     * @param skuPropertyJson
+     * @return
+     */
+    void updateSkuProperties(@Param("productId") Long productId,@Param("skuPropertyJson") String skuPropertyJson);
 }

@@ -8,9 +8,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.*;
 import lombok.experimental.Accessors;
 
 /**
@@ -25,6 +23,8 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
 @TableName("t_specification")
 public class Specification implements Serializable {
 
@@ -40,7 +40,7 @@ public class Specification implements Serializable {
     private String specName;
 
     @TableField("product_type_id")
-    private ProductType productTypeId;
+    private Long productTypeId;
 
     @TableField("isSku")
     private Integer isSku;
@@ -49,7 +49,7 @@ public class Specification implements Serializable {
     private String value;
 
     @TableField(exist = false)
-    private List<Specification> options =new ArrayList<>();
+    private List<String> options =new ArrayList<>();
 
 
 }

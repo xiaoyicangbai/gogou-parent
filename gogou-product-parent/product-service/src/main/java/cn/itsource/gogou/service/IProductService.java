@@ -7,6 +7,7 @@ import cn.itsource.gogou.util.PageList;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -40,5 +41,7 @@ public interface IProductService extends IService<Product> {
      * @param viewProperty
      * @return
      */
-    void updateViewsProperties(String productId, List<Specification> viewProperty);
+    void updateViewsProperties(Long productId, List<Specification> viewProperty);
+
+    void updateSkuProperties(Long productId, List<Specification> skuProperties, List<Map<String, String>> skus);
 }

@@ -52,8 +52,14 @@
             </if>
         </where>
     </sql>
+    <!--更新显示属性-->
     <update id="updateViewsProperties">
         update t_product set t_product.viewProperties=#{viewsPropertyJson}
+        where t_product.id=#{productId}
+    </update>
+    <!--更新SKU属性-->
+    <update id="updateSkuProperties">
+        update t_product set t_product.skuProperties=#{skuPropertyJson}
         where t_product.id=#{productId}
     </update>
 

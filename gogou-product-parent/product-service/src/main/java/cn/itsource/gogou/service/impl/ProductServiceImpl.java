@@ -2,9 +2,11 @@ package cn.itsource.gogou.service.impl;
 
 import cn.itsource.gogou.domain.Product;
 import cn.itsource.gogou.domain.ProductExt;
+import cn.itsource.gogou.domain.Sku;
 import cn.itsource.gogou.domain.Specification;
 import cn.itsource.gogou.mapper.ProductExtMapper;
 import cn.itsource.gogou.mapper.ProductMapper;
+import cn.itsource.gogou.mapper.SkuMapper;
 import cn.itsource.gogou.mapper.SpecificationMapper;
 import cn.itsource.gogou.query.ProductQuery;
 import cn.itsource.gogou.service.IProductService;
@@ -21,6 +23,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -37,6 +40,8 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
 
     @Autowired
     private SpecificationMapper specificationMapper;
+    @Autowired
+    private SkuMapper skuMapper;
 
     /**
      * 分页查询
@@ -77,6 +82,8 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
         return specifications;
     }
 
+
+
     /**
      * 查询显示属性
      * @param productId
@@ -108,10 +115,42 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
      * @return
      */
     @Override
-    public void updateViewsProperties(String productId, List<Specification> viewProperty) {
+    public void updateViewsProperties(Long productId, List<Specification> viewProperty) {
         //将数组转成json字符串
         String viewsPropertyJson = JSON.toJSONString(viewProperty);
         baseMapper.updateViewsProperties(productId,viewsPropertyJson);
+    }
+    /**
+     * 更新SKU属性
+     * @param productId
+     * @param skuProperties
+     * @return
+     */
+    @Override
+    public void updateSkuProperties(Long productId, List<Specification> skuProperties, List<Map<String, String>> skus) {
+        //将数组转成json字符串
+        String skuPropertyJson = JSON.toJSONString(skuProperties);
+        System.out.println("进入pruductSKU维护方法++++"+skuPropertyJson);
+        baseMapper.updateSkuProperties(productId,skuPropertyJson);
+        //保存sku
+        Sku sku=null;
+        for (Map<String, String> skuMap : skus) {
+            sku=new Sku();
+            sku.setCreateTime(System.currentTimeMillis());
+            sku.setProductId(productId);
+            //设置skuName
+            StringBuilder sb= new StringBuilder();
+            for (Map.Entry<String, String> entry : skuMap.entrySet()) {
+                if(!"price".equals(entry.getKey())&&!"strock".equals(entry.getKey())){
+                    sb.append(entry.getValue());
+                }
+                sku.setSkuName(sb.toString());
+            }
+            sku.setPrice(Integer.parseInt(skuMap.get("price")));
+            sku.setAvailableStock(Integer.parseInt(skuMap.get("stock")));
+            sku.setIndexs(skuMap.get("indexs"));
+            skuMapper.insert(sku);
+        }
     }
 
     /**
